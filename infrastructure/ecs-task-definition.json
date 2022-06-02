@@ -131,6 +131,10 @@
                     "value": "${django_allowed_hosts}"
                 },
 		{
+                    "name": "DJANGO_SETTINGS_MODULE",
+                    "value": "${django_settings_module}"
+		},
+		{
                     "name": "SECRET_KEY",
                     "value": "${django_secret_key}"
 		}

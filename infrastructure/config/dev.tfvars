@@ -22,4 +22,5 @@ webapp_debug = 0
 webapp_instances = 1
 
 django_allowed_hosts = "*"
+django_settings_module = "realworld.config.settings.base"
 django_secret_key = "secret"

@@ -27,6 +27,7 @@ resource "aws_ecs_task_definition" "task_definition" {
     "webapp_debug" = var.webapp_debug,
     "account_id" = data.aws_caller_identity.current.account_id
     "django_allowed_hosts" = var.django_allowed_hosts,
+    "django_settings_module" = var.django_settings_module,
     "django_secret_key" = var.django_secret_key
   }))
   volume {

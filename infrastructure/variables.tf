@@ -30,4 +30,5 @@ variable "webapp_instances" {}
 variable "webapp_debug" {}
 
 variable "django_allowed_hosts" {}
+variable "django_settings_module" {}
 variable "django_secret_key" {}
