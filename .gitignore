@@ -4,5 +4,7 @@ venv
 env
 *.pyc
 *.sqlite3
+*~
+.terraform*
 
 staticfiles

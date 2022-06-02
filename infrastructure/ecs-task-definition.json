@@ -1,0 +1,174 @@
+[
+        {
+            "dnsSearchDomains": null,
+            "environmentFiles": null,
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "secretOptions": null,
+                "options": {
+                    "awslogs-group": "/ecs/realworld",
+                    "awslogs-region": "${region}",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "entryPoint": null,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "containerPort": 80
+                }
+            ],
+            "command": null,
+            "linuxParameters": null,
+            "cpu": 0,
+            "environment": [],
+            "resourceRequirements": null,
+            "ulimits": null,
+            "dnsServers": null,
+            "mountPoints": [
+                {
+                    "readOnly": null,
+                    "containerPath": "/staticfiles",
+                    "sourceVolume": "static_volume"
+                }
+            ],
+            "workingDirectory": null,
+            "secrets": null,
+            "dockerSecurityOptions": null,
+            "memory": 128,
+            "memoryReservation": null,
+            "volumesFrom": [],
+            "stopTimeout": null,
+            "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/${namespace}-${env}-nginx",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": false,
+            "links": [
+                "webapp"
+            ],
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": null,
+            "user": null,
+            "readonlyRootFilesystem": null,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": null,
+            "name": "nginx"
+        },
+        {
+            "dnsSearchDomains": null,
+            "environmentFiles": null,
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "secretOptions": null,
+                "options": {
+                    "awslogs-group": "/ecs/realworld",
+                    "awslogs-region": "${region}",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "entryPoint": null,
+            "portMappings": [
+                {
+                    "hostPort": ${webapp_port},
+                    "protocol": "tcp",
+                    "containerPort": ${webapp_port}
+                }
+            ],
+            "command": [
+                "gunicorn",
+                "realworld.config.wsgi:application",
+                "--bind",
+                "0.0.0.0:8000"
+            ],
+            "linuxParameters": null,
+            "cpu": 0,
+            "environment": [
+		{
+		    "name": "ENV",
+		    "value": "${env}"
+		},
+                {
+                    "name": "DATABASE",
+                    "value": "postgres"
+                },
+                {
+                    "name": "SQL_ENGINE",
+                    "value": "django.db.backends.postgresql"
+                },
+                {
+                    "name": "SQL_HOST",
+                    "value": "${database_url}"
+                },
+                {
+                    "name": "SQL_PORT",
+                    "value": "${database_port}"
+                },
+                {
+                    "name": "SQL_DATABASE",
+                    "value": "${database_name}"
+                },
+		{
+                    "name": "SQL_USER",
+                    "value": "${database_username}"
+                },
+                {
+                    "name": "SQL_PASSWORD",
+                    "value": "${database_password}"
+                },
+                {
+                    "name": "DEBUG",
+                    "value": "${webapp_debug}"
+                },
+                {
+                    "name": "DJANGO_ALLOWED_HOSTS",
+                    "value": "${django_allowed_hosts}"
+                },
+		{
+                    "name": "SECRET_KEY",
+                    "value": "${django_secret_key}"
+		}
+            ],
+            "resourceRequirements": null,
+            "ulimits": null,
+            "dnsServers": null,
+            "mountPoints": [
+                {
+                    "readOnly": null,
+                    "containerPath": "/home/app/web/realworld/staticfiles/",
+                    "sourceVolume": "static_volume"
+                }
+            ],
+            "workingDirectory": null,
+            "secrets": null,
+            "dockerSecurityOptions": null,
+            "memory": 128,
+            "memoryReservation": null,
+            "volumesFrom": [],
+            "stopTimeout": null,
+            "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/${namespace}-${env}-webapp",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": [],
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": null,
+            "user": null,
+            "readonlyRootFilesystem": null,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": null,
+            "name": "webapp"
+        }
+]
